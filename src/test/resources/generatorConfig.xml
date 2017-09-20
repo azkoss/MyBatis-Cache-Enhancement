@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--
+    向classpath下添加JDBC驱动
+    -->
+    <classPathEntry location="/home/wanggang/.dbeaver-drivers/maven/maven-central/mysql/mysql-connector-java-5.1.39.jar"/>
+    <!--
+    generatorConfiguration节点下必须至少有一个context节点
+    context节点用来描述生成上下文，并添加要反向生成的table
+
+    <!ATTLIST context id ID #REQUIRED
+    defaultModelType CDATA #IMPLIED
+    targetRuntime CDATA #IMPLIED
+    introspectedColumnImpl CDATA #IMPLIED>
+
+    defaultModelType: 这个属性用来设置生成对象类型的默认值。 对象类型定义了MBG如何生成实体类。 对某些对象类型，MBG会给每一个表生成一个单独的实体类。 对另外一些对象类型，MBG会根据表结构生成不同的类。这个属性有以下可选值：
+        conditional:这是默认值。这个模型和hierarchical类似，除了如果那个单独的类将只包含一个字段，将不会生成一个单独的类。 因此,如果一个表的主键只有一个字段,那么不会为该字段生成单独的实体类,会将该字段合并到基本实体类中。
+        flat:该模型为每一张表只生成一个实体类。这个实体类包含表中的所有字段。
+        hierarchical:如果表有主键,那么该模型会产生一个单独的主键实体类,如果表还有BLOB字段， 则会为表生成一个包含所有BLOB字段的单独的实体类,然后为所有其他的字段生成一个单独的实体类。 MBG会在所有生成的实体类之间维护一个继承关系（注：BLOB类 继承 其他字段类 继承 主键类）。
+
+    targetRuntime：此属性用于指定生成的代码的运行时目标。 该属性支持这些特殊的值：
+        MyBatis3：使用这值的时候，MBG会生成兼容MyBatis 3.0或更高版本， 兼容JSE 5.0或更高版本的对象（例如Java模型类和Mapper接口会使用泛型）。 这些生成对象中的"by example"方法将支持几乎不受限制的动态的where子句。 另外，这些生成器生成的Java对象支持JSE 5.0特性，包含泛型和注解。
+        MyBatis3Simple：使用这值的时候，和上面的MyBatis3类似，但是不会有"by example"一类的方法，只有少量的动态SQL。
+        Ibatis2Java2：使用这值的时候，MBG会生成兼容iBATIS 2.2.0或更高版本（除了iBATIS 3），还有Java2的所有层次。 这些生成对象中的"by example"方法将支持几乎不受限制的动态的where子句。 这些生成的对象不能100%和原生的Abator或其他的代码生成器兼容。
+        Ibatis2Java5:使用这值的时候，MBG会生成兼容iBATIS 2.2.0或更高版本（除了iBATIS 3）， 兼容JSE 5.0或更高版本的对象（例如Java模型类和Dao类会使用泛型）。 这些生成对象中的"by example"方法将支持几乎不受限制的动态的where子句。 另外，这些生成器生成的Java对象支持JSE 5.0特性，包含泛型和注解。 这些生成的对象不能100%和原生的Abator或其他的代码生成器兼容。
+        如果您想创建一个完全不同的代码生成器， 使用一个继承了org.mybatis.generator.api.IntrospectedTable类的权限定类名替换该值。 通过这个值，您可以创建您自己的代码生成器，然后插入到代码生成器引擎中。
+
+    introspectedColumnImpl: 使用这个值去指定一个继承了org.mybatis.generator.api.IntrospectedColumn类的权限定名称。 这可以修改代码生成器计算列信息时候的行为。
+    -->
+    <context id="MysqlTables_customer_cust" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <!--
+        生成注释的配置
+        suppressAllComments: 默认为false，false向代码中添加注释，true不向代码中添加注释
+        suppressDate: 默认为false，false向代码注释中添加生成日期，true不向代码中添加生成日期
+        -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 元素定义如何连接目标数据库 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/config_center?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!--
+          The javaTypeResolver element is used to define properties of the Java Type Resolver.
+          The Java Type Resolver is used to calculate Java types from database column information.
+          The default Java Type Resolver attempts to make JDBC DECIMAL and NUMERIC types easier
+          to use by substituting Integral types if possible (Long, Integer, Short, etc.)
+        -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 元素来指定生成 Java模型对象所属的包 -->
+        <javaModelGenerator targetPackage="com.github.wanggit.mybatis.cache.enhancement.dao.entity" targetProject="src/test/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 元素指定生成SQL映射文件的位置与目标项目 -->
+        <sqlMapGenerator targetPackage="com.github.wanggit.mybatis.cache.enhancement.dao.mapper"  targetProject="src/test/java">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--
+        元素来指定目标包和目标项目生成的客户端Dao接口和类 （如果您不想生成 Java 客户端Mapper代码您可以省略< javaClientGenerator > 元素）
+
+        type: 此属性用于选择一个预定义的Java客户端的生成器，或指定用户提供的Java客户端生成器。 任何用户提供的DAO生成器必须继承 org.mybatis.generator.codegen.AbstractJavaClientGenerator 类, 必须有一个公开默认的构造函数。type的属性值随着context节点targetRuntime属性不同值有不同的可选值。
+            context[targetRuntime=MyBitas3]时:
+                ANNOTATEDMAPPER:生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。 这些接口将会基于注解和 MyBatis 3.x SqlProviders。不会有XML文件生成。（注：就是纯接口使用注解的形式，不会有XML文件） ANNOTATEDMAPPER 依赖 MyBatis 3.0.4 或更高版本。
+                MIXEDMAPPER:生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。 这些接口将基于注解和XML的混合形式。 注解将会用在简单注解可以实现的地方。 此客户端不会生成SqlProvider，所有复杂的动态SQL都会生成在XML中。 The MIXEDMAPPER 依赖 MyBatis 3.0.4 或更高版本。
+                XMLMAPPER:生成的对象是 MyBatis 3.x 映射器基础结构的 Java接口。 这些接口将会依赖于生成的XML文件。
+            context[targetRuntime=MyBitas3Simple]时：可使用ANNOTATEDMAPPER与XMLMAPPER，含义与targetRuntime=MyBatis3时相同。
+            context[targetRuntime=Ibatis2Java2|Ibatis2Java5]时：
+                IBATIS：生成的对象将符合（不建议使用）iBATIS的DAO框架。
+                GENERIC-CI：生成的对象将只依赖于SqlMapClient。SqlMapClient将会通过构造参数依赖注入提供。 生成的对象将是DAO接口和实现类的形式。
+                GENERIC-SI：生成的对象将只依赖于SqlMapClient。SqlMapClient将会通过setter方法依赖注入提供。 生成的对象将是DAO接口和实现类的形式。
+                SPRING：生成的对象将符合Spring的DAO框架。
+
+        targetPackage：这个包用于放置生成的接口和实现类。 在默认的生成器中，属性"enableSubPackages"用来控制如何计算实际的包。 如果是true，如果表的catalog和schema存在，就将他们作为子包加起来。 如果"enableSubPackages"是false（默认值），计算的package将是targetPackage属性指定的值。 MBG 将创建所需的生成包的文件夹。
+
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.github.wanggit.mybatis.cache.enhancement.dao.mapper"  targetProject="src/test/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+
+        <table tableName="cc_account" domainObjectName="Account"></table>
+        <table tableName="cc_configuration" domainObjectName="Configuration"></table>
+        <table tableName="cc_group" domainObjectName="Group"></table>
+        <table tableName="cc_project" domainObjectName="Project"></table>
+
+    </context>
+</generatorConfiguration>
