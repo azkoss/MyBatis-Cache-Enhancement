@@ -190,6 +190,7 @@
 						<configuration>
 							<verbose>true</verbose>
 							<overwrite>false</overwrite>
+							<configurationFile>src/test/resources/generatorConfig.xml</configurationFile>
 						</configuration>
 						<executions>
 							<execution>
