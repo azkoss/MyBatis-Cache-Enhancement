@@ -1,5 +1,6 @@
 package com.github.wanggit.mybatis.cache.enhancement.dao.mapper;
 
+import com.github.wanggit.mybatis.cache.enhancement.context.annotations.Cache;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.Account;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.AccountExample;
 import java.util.List;
@@ -52,6 +53,7 @@ public interface AccountMapper {
      *
      * @mbggenerated
      */
+    @Cache()
     List<Account> selectByExample(AccountExample example);
 
     /**
