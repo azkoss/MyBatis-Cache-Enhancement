@@ -25,7 +25,7 @@
 		<setting name="defaultStatementTimeout" value="25000" />
 		<setting name="callSettersOnNulls" value="true"/>
 	</settings>
-	<plugins>
+	<!--<plugins>
 		<plugin interceptor="com.github.pagehelper.PageHelper">
 			<property name="dialect" value="mysql" />
 			<property name="offsetAsPageNum" value="true" />
@@ -33,5 +33,5 @@
 			<property name="pageSizeZero" value="true" />
 			<property name="reasonable" value="false" />
 		</plugin>
-	</plugins>
+	</plugins>-->
 </configuration>
