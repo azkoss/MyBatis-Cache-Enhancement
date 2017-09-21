@@ -1,5 +1,6 @@
 mybatis.cache.enhancement.iml
 .idea
+target
 
 # Compiled class file
 *.class
