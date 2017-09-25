@@ -1,5 +1,7 @@
 package com.github.wanggit.mybatis.cache.enhancement.xmybatis.xspring;
 
+import com.github.wanggit.mybatis.cache.enhancement.xmybatis.XConfiguration;
+import com.github.wanggit.mybatis.cache.enhancement.xmybatis.XXMLConfigBuilder;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.cache.Cache;
@@ -71,7 +73,7 @@ public class XSqlSessionFactoryBean extends SqlSessionFactoryBean {
 
         Configuration configuration;
 
-        XMLConfigBuilder xmlConfigBuilder = null;
+        XXMLConfigBuilder xmlConfigBuilder = null;
         if (this.configuration != null) {
             configuration = this.configuration;
             if (configuration.getVariables() == null) {
@@ -80,13 +82,13 @@ public class XSqlSessionFactoryBean extends SqlSessionFactoryBean {
                 configuration.getVariables().putAll(this.configurationProperties);
             }
         } else if (this.configLocation != null) {
-            xmlConfigBuilder = new XMLConfigBuilder(this.configLocation.getInputStream(), null, this.configurationProperties);
+            xmlConfigBuilder = new XXMLConfigBuilder(this.configLocation.getInputStream(), null, this.configurationProperties);
             configuration = xmlConfigBuilder.getConfiguration();
         } else {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration");
             }
-            configuration = new Configuration();
+            configuration = new XConfiguration();
             if (this.configurationProperties != null) {
                 configuration.setVariables(this.configurationProperties);
             }
@@ -213,5 +215,11 @@ public class XSqlSessionFactoryBean extends SqlSessionFactoryBean {
         }
 
         return this.sqlSessionFactoryBuilder.build(configuration);
+    }
+
+    @Override
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+        super.setDataSource(dataSource);
     }
 }
