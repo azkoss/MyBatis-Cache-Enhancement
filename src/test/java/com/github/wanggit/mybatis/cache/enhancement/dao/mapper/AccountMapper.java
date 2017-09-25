@@ -4,7 +4,10 @@ import com.github.wanggit.mybatis.cache.enhancement.context.annotations.Cache;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.Account;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.AccountExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 
 public interface AccountMapper {
     /**

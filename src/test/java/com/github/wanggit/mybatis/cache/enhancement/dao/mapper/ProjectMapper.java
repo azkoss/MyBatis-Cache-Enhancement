@@ -3,7 +3,10 @@ package com.github.wanggit.mybatis.cache.enhancement.dao.mapper;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.Project;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.ProjectExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 
 public interface ProjectMapper {
     /**
