@@ -1,15 +1,17 @@
 package com.github.wanggit.mybatis.cache.enhancement.controller;
 
-import java.util.*;
-import javax.servlet.http.*;
-
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.Project;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.ProjectExample;
+import com.github.wanggit.mybatis.cache.enhancement.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.wanggit.mybatis.cache.enhancement.service.ProjectService;
+import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -36,7 +38,8 @@ public class ProjectResource {
     @GetMapping("/list")
     @ResponseBody
     public String list() {
-        return null;
+        List<Project> projects = rojectService.selectByExample(new ProjectExample());
+        return String.valueOf(projects.size());
     }
 
     @PostMapping("/delete")
