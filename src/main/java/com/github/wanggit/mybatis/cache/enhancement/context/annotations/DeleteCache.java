@@ -13,4 +13,6 @@ public @interface DeleteCache {
      */
     String[] delete() default {};
 
+    Class clazz() default Object.class;
+
 }

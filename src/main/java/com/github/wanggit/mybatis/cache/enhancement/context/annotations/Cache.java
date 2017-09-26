@@ -21,15 +21,4 @@ public @interface Cache {
      */
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
-    /**
-     * Delete the cache with some event occurred.
-     * example:
-     * <code>
-     *     \@Cache(deleteWith={"xxxInsert", "xxxUpdate", "xxxDelete"})
-     * </code>
-     * The will delete when xxxInsert or xxxUpdate or xxxDelete method invoked.
-     * @return event names
-     */
-    String[] deleteWith() default {};
-
 }
