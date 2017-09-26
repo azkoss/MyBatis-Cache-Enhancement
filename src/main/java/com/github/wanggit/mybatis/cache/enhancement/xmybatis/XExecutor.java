@@ -4,6 +4,8 @@ import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.reflection.MetaObject;
@@ -15,6 +17,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class XExecutor implements Executor {
+
+    private static final Log log = LogFactory.getLog(XExecutor.class);
+
     @Override
     public int update(MappedStatement ms, Object parameter) throws SQLException {
         return 0;
