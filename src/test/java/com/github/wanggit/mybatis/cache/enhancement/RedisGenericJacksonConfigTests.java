@@ -14,23 +14,22 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles({"redisJacksonConf", "test"})
-public class RedisJackson2JsonConfigTests extends AbsRedisConfigTests {
+@ActiveProfiles({"redisGenericJacksonConf", "test"})
+public class RedisGenericJacksonConfigTests extends AbsRedisConfigTests {
 
     @Autowired
     private WebApplicationContext context;
 
-    private static final String CLASS_NAME = "org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer";
+    private static final String CLASS_NAME = "org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer";
 
     @Test
     public void testActiveProfiles(){
         String[] profiles = context.getEnvironment().getActiveProfiles();
-        Assert.assertArrayEquals(new String[]{"redisJacksonConf", "test"}, profiles);
+        Assert.assertArrayEquals(new String[]{"redisGenericJacksonConf", "test"}, profiles);
     }
 
-    @Override
     public String getBeanName() {
-        return "cacheEnhancementJackson2JsonRedisSerializer";
+         return "cacheEnhancementGenericJackson2JsonRedisSerializer";
     }
 
     @Override
@@ -42,5 +41,4 @@ public class RedisJackson2JsonConfigTests extends AbsRedisConfigTests {
     public WebApplicationContext getContext() {
         return context;
     }
-
 }

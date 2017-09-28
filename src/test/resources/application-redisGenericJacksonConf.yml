@@ -1,0 +1,5 @@
+cache:
+  enhancement:
+    redis:
+      enable: true
+      serializer: org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer

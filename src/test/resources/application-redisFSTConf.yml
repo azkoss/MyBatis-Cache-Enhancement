@@ -1,0 +1,5 @@
+cache:
+  enhancement:
+    redis:
+      enable: true
+      serializer: com.github.wanggit.mybatis.cache.enhancement.serializer.FSTSerializer
