@@ -11,6 +11,10 @@ public class CacheContext {
 
     private static Map<String, List<DeleteCacheMeta>> deleteCacheMetaMap = new HashMap<>();
 
+    public static CacheMeta getCacheMeta(String statementId){
+        return cacheMetaMap.get(statementId);
+    }
+
     public static synchronized void addCacheMeta(CacheMeta cacheMeta){
         cacheMetaMap.put(cacheMeta.getFullName(), cacheMeta);
     }
@@ -90,7 +94,10 @@ public class CacheContext {
     }
 
     public static class CacheMeta{
-        private int timeout;
+        /**
+         * less than zero never expired
+         */
+        private int timeout = -1;
 
         private TimeUnit timeUnit;
 

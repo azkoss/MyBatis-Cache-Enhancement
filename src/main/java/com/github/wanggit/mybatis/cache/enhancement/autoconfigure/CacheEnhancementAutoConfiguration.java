@@ -1,9 +1,12 @@
 package com.github.wanggit.mybatis.cache.enhancement.autoconfigure;
 
 import com.github.wanggit.mybatis.cache.enhancement.config.CacheEnhancementBeanPostProcessor;
+import com.github.wanggit.mybatis.cache.enhancement.context.CacheDelegate;
+import com.github.wanggit.mybatis.cache.enhancement.context.ICache;
+import com.github.wanggit.mybatis.cache.enhancement.context.redis.RedisCache;
 import com.github.wanggit.mybatis.cache.enhancement.serializer.FSTSerializer;
+import com.github.wanggit.mybatis.cache.enhancement.utils.XSpringUtils;
 import org.nustaq.serialization.FSTConfiguration;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -69,6 +72,18 @@ public class CacheEnhancementAutoConfiguration {
     public FSTSerializer cacheEnhancementFSTSerializer(){
         FSTConfiguration conf = FSTConfiguration.createDefaultConfiguration();
         return new FSTSerializer(conf);
+    }
+
+    @Bean
+    @ConditionalOnBean(name = "cacheEnhancementRedisTemplate", value = RedisTemplate.class)
+    @ConditionalOnProperty(prefix = "cache.enhancement", value = "redis.enable", havingValue = "true")
+    public ICache redisCacheSupportHash(RedisTemplate<String, Object> redisTemplate){
+        return new RedisCache(redisTemplate);
+    }
+
+    @Bean
+    public XSpringUtils cacheEnhancementSpringUtils(){
+        return new XSpringUtils();
     }
 
     @Deprecated
