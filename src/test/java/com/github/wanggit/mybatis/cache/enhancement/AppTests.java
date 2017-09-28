@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
+@ActiveProfiles({"test"})
 public class AppTests {
 
     MockMvc mockMvc;
@@ -33,7 +35,7 @@ public class AppTests {
     @Test
     public void testProjectResourceSave(){
         try {
-            for (int i=0;i<10;i++){
+            for (int i=0;i<20;i++){
                 RequestBuilder builder = MockMvcRequestBuilders.post("/project/save")
                         .param("name", "Name" + i)
                         .param("creator", String.valueOf(i));
@@ -48,16 +50,29 @@ public class AppTests {
             int listStatus = listResult.getResponse().getStatus();
             Assert.assertTrue(200 == listStatus);
             String sizeContent = listResult.getResponse().getContentAsString();
-            Assert.assertTrue(10 == Integer.parseInt(sizeContent));
+            Assert.assertTrue(4 == Integer.parseInt(sizeContent));
 
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/project/delete")).andReturn();
-            int status = mvcResult.getResponse().getStatus();
-            Assert.assertTrue(200 == status);
-            String content = mvcResult.getResponse().getContentAsString();
-            Assert.assertTrue("ok".equals(content));
+            listResult = mockMvc.perform(MockMvcRequestBuilders.get("/project/list")
+                    .param("name", "Name3")).andReturn();
+            listStatus = listResult.getResponse().getStatus();
+            Assert.assertTrue(200 == listStatus);
+            sizeContent = listResult.getResponse().getContentAsString();
+            Assert.assertTrue(1 == Integer.parseInt(sizeContent));
+
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());
+        }finally {
+            try {
+                MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/project/delete")).andReturn();
+                int status = mvcResult.getResponse().getStatus();
+                Assert.assertTrue(200 == status);
+                String content = mvcResult.getResponse().getContentAsString();
+                Assert.assertTrue("ok".equals(content));
+            } catch (Exception e) {
+                e.printStackTrace();
+                Assert.fail(e.getMessage());
+            }
         }
     }
 
