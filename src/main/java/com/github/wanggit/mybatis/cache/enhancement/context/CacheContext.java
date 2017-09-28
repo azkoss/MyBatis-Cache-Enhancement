@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 public class CacheContext {
 
+    private static final ThreadLocal<String> local = new ThreadLocal<>();
+
     private static Map<String, CacheMeta> cacheMetaMap = new HashMap<>();
 
     private static Map<String, List<DeleteCacheMeta>> deleteCacheMetaMap = new HashMap<>();
@@ -18,6 +20,14 @@ public class CacheContext {
             deleteCacheMetaMap.put(deleteCacheMeta.getFullName(), new ArrayList<>());
         }
         deleteCacheMetaMap.get(deleteCacheMeta.getFullName()).add(deleteCacheMeta);
+    }
+
+    public static void set(String mappedStatementId){
+        local.set(mappedStatementId);
+    }
+
+    public static String get(){
+        return local.get();
     }
 
     public static class DeleteCacheMeta{
