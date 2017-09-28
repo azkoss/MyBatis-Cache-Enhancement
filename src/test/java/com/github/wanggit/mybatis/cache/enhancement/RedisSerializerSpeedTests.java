@@ -2,6 +2,7 @@ package com.github.wanggit.mybatis.cache.enhancement;
 
 import com.github.wanggit.mybatis.cache.enhancement.autoconfigure.CacheEnhancementAutoConfiguration;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.Account;
+import com.github.wanggit.mybatis.cache.enhancement.serializer.FSTSerializer;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Assert;
@@ -184,6 +185,18 @@ public class RedisSerializerSpeedTests {
         stopWatch.stop();
         stopWatch.start("deserialize " + FSTConfiguration.class.getName());
         object = conf.asObject(bytes);
+        stopWatch.stop();
+        Assert.assertTrue(object instanceof List);
+
+
+        conf = FSTConfiguration.createDefaultConfiguration();
+        FSTSerializer fstSerializer = new FSTSerializer(conf);
+        stopWatch.start("serialize " + FSTSerializer.class.getName());
+        bytes = fstSerializer.serialize(datas);
+        logger.info("FSTSerializer: " + bytes.length);
+        stopWatch.stop();
+        stopWatch.start("deserialize " + FSTSerializer.class.getName());
+        object = fstSerializer.deserialize(bytes);
         stopWatch.stop();
         Assert.assertTrue(object instanceof List);
 
