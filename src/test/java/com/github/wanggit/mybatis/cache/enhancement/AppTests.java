@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
-@ActiveProfiles({"test"})
+@ActiveProfiles({"test", "redisFSTConf"})
 public class AppTests {
 
     MockMvc mockMvc;
@@ -30,6 +30,12 @@ public class AppTests {
     @Before
     public void init(){
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
+
+    @Test
+    public void testActiveProfiles(){
+        String[] profiles = context.getEnvironment().getActiveProfiles();
+        Assert.assertArrayEquals(profiles, new String[]{"test", "redisFSTConf"});
     }
 
     @Test

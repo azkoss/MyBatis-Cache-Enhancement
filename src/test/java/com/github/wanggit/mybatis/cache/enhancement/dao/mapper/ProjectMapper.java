@@ -1,5 +1,6 @@
 package com.github.wanggit.mybatis.cache.enhancement.dao.mapper;
 
+import com.github.wanggit.mybatis.cache.enhancement.context.annotations.Cache;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.Project;
 import com.github.wanggit.mybatis.cache.enhancement.dao.entity.ProjectExample;
 import java.util.List;
@@ -55,6 +56,7 @@ public interface ProjectMapper {
      *
      * @mbggenerated
      */
+    @Cache
     List<Project> selectByExample(ProjectExample example);
 
     /**
@@ -63,6 +65,7 @@ public interface ProjectMapper {
      *
      * @mbggenerated
      */
+    @Cache
     Project selectByPrimaryKey(Integer id);
 
     /**
