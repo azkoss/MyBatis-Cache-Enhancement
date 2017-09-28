@@ -24,6 +24,9 @@ public class FSTSerializer implements RedisSerializer {
 
     @Override
     public byte[] serialize(Object o) throws SerializationException {
+        if (null == o){
+            return null;
+        }
         ByteArrayOutputStream stream = null;
         try {
             stream = new ByteArrayOutputStream();
@@ -48,6 +51,9 @@ public class FSTSerializer implements RedisSerializer {
 
     @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
+        if (null == bytes){
+            return null;
+        }
         ByteArrayInputStream stream = null;
         try {
             stream = new ByteArrayInputStream(bytes);
