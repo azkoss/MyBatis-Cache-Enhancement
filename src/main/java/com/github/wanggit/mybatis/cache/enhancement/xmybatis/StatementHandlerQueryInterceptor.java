@@ -3,6 +3,7 @@ package com.github.wanggit.mybatis.cache.enhancement.xmybatis;
 import com.github.wanggit.mybatis.cache.enhancement.context.CacheContext;
 import com.github.wanggit.mybatis.cache.enhancement.context.CacheDelegate;
 import com.github.wanggit.mybatis.cache.enhancement.context.ICache;
+import com.github.wanggit.mybatis.cache.enhancement.utils.Md5Util;
 import com.github.wanggit.mybatis.cache.enhancement.utils.ThreadUtils;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.Log;
@@ -37,6 +38,9 @@ public class StatementHandlerQueryInterceptor extends StatementHandlerBaseInterc
         }
         String hashKey = super.calcCacheKey(invocation);
         String hashExistsKey = hashKey + ICache.KEY_EXISTS_POSTFIX;
+        // 使用MD5把key缩短
+        hashKey = Md5Util.md5(hashKey);
+        hashExistsKey = Md5Util.md5(hashExistsKey);
         // 如果缓存中已存在数据，那么直接返回数据
         Object cacheData = CacheDelegate.get(key, hashKey);
         if (null != cacheData){
