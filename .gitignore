@@ -1,4 +1,5 @@
-mybatis.cache.enhancement.iml
+*.pyc
+*.iml
 .idea
 target
 
