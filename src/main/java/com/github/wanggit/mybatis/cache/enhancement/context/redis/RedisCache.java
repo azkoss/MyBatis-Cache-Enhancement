@@ -3,6 +3,7 @@ package com.github.wanggit.mybatis.cache.enhancement.context.redis;
 import com.github.wanggit.mybatis.cache.enhancement.context.ICacheSupportHash;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class RedisCache implements ICacheSupportHash {
@@ -36,5 +37,10 @@ public class RedisCache implements ICacheSupportHash {
     @Override
     public void expired(String key, long timeout, TimeUnit timeUnit) {
         redisTemplate.expire(key, timeout, timeUnit);
+    }
+
+    @Override
+    public void del(String... keys) {
+        redisTemplate.delete(Arrays.asList(keys));
     }
 }

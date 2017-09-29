@@ -15,6 +15,10 @@ public class CacheContext {
         return cacheMetaMap.get(statementId);
     }
 
+    public static List<DeleteCacheMeta> getDeleteCacheMetas(String statementId){
+        return deleteCacheMetaMap.get(statementId);
+    }
+
     public static synchronized void addCacheMeta(CacheMeta cacheMeta){
         cacheMetaMap.put(cacheMeta.getFullName(), cacheMeta);
     }
@@ -52,6 +56,15 @@ public class CacheContext {
          * delete target class
          */
         private Class targetClazz;
+
+        public String[] getFullTargets(){
+            String mapperClazzName = targetClazz.getName();
+            String[] fullTargets = new String[targetDeletes.length];
+            for (int i = 0; i < targetDeletes.length; i++) {
+                fullTargets[i] = mapperClazzName + "." + targetDeletes[i];
+            }
+            return fullTargets;
+        }
 
         public String[] getTargetDeletes() {
             return targetDeletes;

@@ -6,9 +6,12 @@ class MceTaskSet(TaskSet):
 	def queryProject(self):
 		self.client.get('/project/list')
 
-	@task(2)
+	@task(1)
 	def insertProject(self):
-		pass
+		for x in range(1, 50):
+			self.client.post('/project/save', {"name":"wanggang", "creator":x})
+
+		self.client.post('/project/delete')
 
 
 class MceLocust(HttpLocust):

@@ -46,4 +46,8 @@ public class CacheDelegate {
         ICache cache = XSpringUtils.getCacheImplement();
         cache.expired(key, timeout, timeUnit);
     }
+
+    public static void del(String...keys){
+        XSpringUtils.getCacheImplement().del(keys);
+    }
 }
